@@ -19,6 +19,16 @@ const comfortaa = localFont({
   display: 'swap',
   variable: '--font-comfortaa',
 });
+const caveat = localFont({
+  src: './fonts/caveat.ttf',
+  display: 'swap',
+  variable: '--font-caveat',
+});
+const loveya = localFont({
+  src: './fonts/loveya.ttf',
+  display: 'swap',
+  variable: '--font-loveya',
+});
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -38,7 +48,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body className={`${montserrat.variable} antialiased`}>
+      <body
+        className={` ${montserrat.variable} ${comfortaa.variable} ${roboto.variable} ${mreaves.variable} ${caveat.variable} ${loveya.variable} antialiased`}
+      >
         <Header />
         {children}
       </body>
