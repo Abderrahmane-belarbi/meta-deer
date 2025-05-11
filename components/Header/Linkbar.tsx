@@ -6,19 +6,25 @@ export default function Linkbar() {
       <div className='py-[10px] font-light font-sans text-sm flex items-center justify-between max-w-[900px] m-auto'>
         {/* Help + Track Order + Icons */}
         <div className='flex items-center gap-4'>
-          <div className='flex items-center gap-1'>
+          <Link className='flex items-center gap-1' href='#'>
             <img src='/assets/svg/help.svg' width={20} height={20} />
-            <p>Help</p>
-          </div>
-          <div className='flex items-center gap-1'>
+            <p className='font-normal'>Help</p>
+          </Link>
+          <Link className='flex items-center gap-1' href='#'>
             <img src='/assets/svg/truck.svg' width={20} height={20} />
-            <p>Track Order</p>
-          </div>
+            <p className='font-normal'>Track Order</p>
+          </Link>
         </div>
         <div className='flex items-center gap-4'>
-          <Link href='#'>Become a Franchisee</Link>
-          <Link href='#'>Find a Store</Link>
-          <Link href='#'>Bulk Orders</Link>
+          <Link href='#' className='font-normal'>
+            Become a Franchisee
+          </Link>
+          <Link href='#' className='font-normal'>
+            Find a Store
+          </Link>
+          <Link href='#' className='font-normal'>
+            Bulk Orders
+          </Link>
         </div>
       </div>
     </div>

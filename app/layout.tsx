@@ -24,10 +24,10 @@ const caveat = localFont({
   display: 'swap',
   variable: '--font-caveat',
 });
-const loveya = localFont({
-  src: './fonts/loveya.ttf',
+const alegreya = localFont({
+  src: './fonts/alegreya.ttf',
   display: 'swap',
-  variable: '--font-loveya',
+  variable: '--font-alegreya',
 });
 
 const montserrat = Montserrat({
@@ -49,7 +49,7 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body
-        className={` ${montserrat.variable} ${comfortaa.variable} ${roboto.variable} ${mreaves.variable} ${caveat.variable} ${loveya.variable} antialiased`}
+        className={` ${montserrat.variable} ${comfortaa.variable} ${roboto.variable} ${mreaves.variable} ${caveat.variable} ${alegreya.variable} antialiased`}
       >
         <Header />
         {children}

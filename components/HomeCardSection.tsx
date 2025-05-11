@@ -21,8 +21,8 @@ export default function HomeCardSection({
     <div className='my-6 py-14 bg-gray-100'>
       <div className='max-w-[900px] m-auto flex flex-col items-center gap-6'>
         <p
-          className='text-gray-700 text-center text-3xl'
-          style={{ fontFamily: 'var(--font-loveya)' }}
+          className='text-gray-700 text-center text-2xl'
+          style={{ fontFamily: 'var(--font-alegreya)' }}
         >
           {title}
         </p>

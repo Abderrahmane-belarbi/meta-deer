@@ -1,7 +1,68 @@
 import HomeCardSection from '@/components/HomeCardSection';
-import HomeCard from '@/components/HomeCardSection';
+import HomeCardSlier from '@/components/HomeCardSlider';
 import { HomeCarousel } from '@/components/HomeCarousel';
 import HomeCategories from '@/components/HomeCategories';
+
+const slideritems1 = [
+  {
+    key: '1',
+    image: '/assets/images/home/livingroom.png',
+    url: '#',
+    title: 'living room',
+  },
+  {
+    key: '2',
+    image: '/assets/images/home/diningroom.png',
+    url: '#',
+    title: 'dining room',
+  },
+  {
+    key: '3',
+    image: '/assets/images/home/bedroom.png',
+    url: '#',
+    title: 'bedRoom',
+  },
+];
+const slideritems3 = [
+  {
+    key: '1',
+    image: '/assets/images/home/NA_Apollo_Neo_Sofa.png',
+    url: '#',
+    title: 'Apollo Neo Sofa',
+  },
+  {
+    key: '2',
+    image: '/assets/images/home/NA_Atlas_Crest_dining_table_set.png',
+    url: '#',
+    title: 'Atlas Crest Dining Table',
+  },
+  {
+    key: '3',
+    image: '/assets/images/home/NA_Hanoi_Bed.png',
+    url: '#',
+    title: 'Hanoi Non Storage Bed',
+  },
+];
+const slideritems2 = [
+  {
+    key: '1',
+    image: '/assets/images/home/shop_the_look.png',
+    url: '#',
+    title: 'Brie',
+  },
+  {
+    key: '2',
+    image: '/assets/images/home/mia_white.png',
+    url: '#',
+    title: 'mia',
+  },
+  {
+    key: '3',
+    image: '/assets/images/home/stl_grata.png',
+    url: '#',
+    title: 'Gretta',
+  },
+];
 
 const items = [
   {
@@ -32,8 +93,8 @@ export default function Home() {
     <div>
       <HomeCarousel items={items} />
       <p
-        className='mt-10 text-center text-3xl'
-        style={{ fontFamily: 'var(--font-loveya)' }}
+        className='mt-10 text-center text-2xl'
+        style={{ fontFamily: 'var(--font-alegreya)' }}
       >
         Explore Our Furniture Range
       </p>
@@ -47,6 +108,14 @@ export default function Home() {
           design.'
         image='/assets/images/home/homecard.png'
       />
+      <HomeCardSlier items={slideritems1} />
+      <HomeCardSection
+        title='Premium Products at Steal Prices!'
+        text='Explore our curated selection of premium products, now available at exceptional steal prices for a touch of luxury in your home.'
+        image='/assets/images/home/homecard2.png'
+      />
+      <HomeCardSlier items={slideritems2} />
+      <HomeCardSlier items={slideritems3} title='New Arrivals' />
     </div>
   );
 }
