@@ -83,19 +83,27 @@ export default function HomeCategories() {
     },
   ];
   return (
-    <div className='max-w-[900px] m-auto py-4 flex flex-wrap justify-center gap-12'>
-      {items.map((item) => {
-        return (
-          <Link
-            key={item.key}
-            className='flex flex-col items-center justify-center'
-            href={item.url}
-          >
-            <Image src={item.image} alt={item.title} width={60} height={60} />
-            <p className='text-sm'>{item.title}</p>
-          </Link>
-        );
-      })}
+    <div>
+      <p
+        className='text-gray-700 mt-12 mb-2 text-center text-2xl'
+        style={{ fontFamily: 'var(--font-alegreya)' }}
+      >
+        Explore Our Furniture Range
+      </p>
+      <div className='max-w-[900px] m-auto py-4 flex flex-wrap justify-center gap-12'>
+        {items.map((item) => {
+          return (
+            <Link
+              key={item.key}
+              className='flex flex-col items-center justify-center'
+              href={item.url}
+            >
+              <Image src={item.image} alt={item.title} width={60} height={60} />
+              <p className='text-sm'>{item.title}</p>
+            </Link>
+          );
+        })}
+      </div>
     </div>
   );
 }

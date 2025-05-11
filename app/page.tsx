@@ -92,12 +92,6 @@ export default function Home() {
   return (
     <div>
       <HomeCarousel items={items} />
-      <p
-        className='mt-10 text-center text-2xl'
-        style={{ fontFamily: 'var(--font-alegreya)' }}
-      >
-        Explore Our Furniture Range
-      </p>
       <HomeCategories />
       <HomeCardSection
         title='Presenting the new Terra collection'
