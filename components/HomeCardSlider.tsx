@@ -25,13 +25,16 @@ export default function HomeCardSlier({
   items: ItemsType;
 }) {
   return (
-    <div className='w-full flex flex-col items-center justify-center py-4'>
-      <p
-        className='text-gray-700 text-center text-2xl'
-        style={{ fontFamily: 'var(--font-alegreya)' }}
-      >
-        {title}
-      </p>
+    <div className='w-full flex flex-col items-center justify-center'>
+      <div className='mt-16 flex flex-col items-center'>
+        <p
+          className='text-gray-700 text-center text-2xl'
+          style={{ fontFamily: 'var(--font-alegreya)' }}
+        >
+          {title}
+        </p>
+        <div className='mt-2 h-[1px] w-20 bg-[#f7750c]'></div>
+      </div>
       <Carousel
         className='w-full'
         opts={{

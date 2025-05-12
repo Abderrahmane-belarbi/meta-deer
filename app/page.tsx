@@ -113,13 +113,16 @@ export default function Home() {
       />
       <HomeCardSlier items={slideritems2} />
       <HomeCardSlier items={slideritems3} title='New Arrivals' />
-      <p
-        className='mt-12 text-gray-700 text-center text-2xl'
-        style={{ fontFamily: 'var(--font-alegreya)' }}
-      >
-        See our products
-      </p>
-      <div className='max-w-[900px] mx-auto mt-10 grid xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3'>
+      <div className='mt-16 flex flex-col items-center'>
+        <p
+          className='text-gray-700 text-center text-2xl'
+          style={{ fontFamily: 'var(--font-alegreya)' }}
+        >
+          See our products
+        </p>
+        <div className='mt-2 h-[1px] w-20 bg-[#f7750c]'></div>
+      </div>
+      <div className='max-w-[900px] mx-auto mt-6 grid xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3'>
         <ProductCard
           image='/assets/images/home/bedroom.png'
           title='Terra Bedroom Collection Furniture Masai Solid Wood King Size Hydraulic Storage Bed in American Walnut Finish'

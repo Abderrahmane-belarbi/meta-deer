@@ -84,12 +84,15 @@ export default function HomeCategories() {
   ];
   return (
     <div>
-      <p
-        className='text-gray-700 mt-12 mb-2 text-center text-2xl'
-        style={{ fontFamily: 'var(--font-alegreya)' }}
-      >
-        Explore Our Furniture Range
-      </p>
+      <div className='mt-16 mb-2 flex flex-col items-center'>
+        <p
+          className='text-gray-700 text-center text-2xl'
+          style={{ fontFamily: 'var(--font-alegreya)' }}
+        >
+          Explore Our Furniture Range
+        </p>
+        <div className='mt-2 h-[1px] w-20 bg-[#f7750c]'></div>
+      </div>
       <div className='max-w-[900px] m-auto py-4 flex flex-wrap justify-center gap-12'>
         {items.map((item) => {
           return (
