@@ -111,7 +111,7 @@ export default function Home() {
         text='Explore our curated selection of premium products, now available at exceptional steal prices for a touch of luxury in your home.'
         image='/assets/images/home/homecard2.png'
       />
-      <HomeCardSlier items={slideritems2} />
+      <HomeCardSlier items={slideritems2} title='Best Selling' />
       <HomeCardSlier items={slideritems3} title='New Arrivals' />
       <div className='mt-16 flex flex-col items-center'>
         <p
