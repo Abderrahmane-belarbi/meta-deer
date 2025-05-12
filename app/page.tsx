@@ -2,6 +2,9 @@ import HomeCardSection from '@/components/HomeCardSection';
 import HomeCardSlier from '@/components/HomeCardSlider';
 import { HomeCarousel } from '@/components/HomeCarousel';
 import HomeCategories from '@/components/HomeCategories';
+import ProductCard from '@/components/ProductCard';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 const slideritems1 = [
   {
@@ -90,7 +93,7 @@ const items = [
 
 export default function Home() {
   return (
-    <div>
+    <div className='w-full'>
       <HomeCarousel items={items} />
       <HomeCategories />
       <HomeCardSection
@@ -110,6 +113,56 @@ export default function Home() {
       />
       <HomeCardSlier items={slideritems2} />
       <HomeCardSlier items={slideritems3} title='New Arrivals' />
+      <p
+        className='mt-12 text-gray-700 text-center text-2xl'
+        style={{ fontFamily: 'var(--font-alegreya)' }}
+      >
+        See our products
+      </p>
+      <div className='max-w-[900px] mx-auto mt-10 grid xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3'>
+        <ProductCard
+          image='/assets/images/home/bedroom.png'
+          title='Terra Bedroom Collection Furniture Masai Solid Wood King Size Hydraulic Storage Bed in American Walnut Finish'
+          price={12000}
+        />
+        <ProductCard
+          image='/assets/images/home/bedroom.png'
+          title='Terra Bedroom Collection Furniture Masai Solid Wood King Size Hydraulic Storage Bed in American Walnut Finish'
+          price={1800}
+          discountPrice={100}
+        />
+        <ProductCard
+          image='/assets/images/home/bedroom.png'
+          title='Terra Bedroom Collection Furniture Masai Solid Wood King Size Hydraulic Storage Bed in American Walnut Finish'
+          price={12000}
+          discountPrice={100}
+        />
+        <ProductCard
+          image='/assets/images/home/bedroom.png'
+          title='Terra Bedroom Collection Furniture Masai Solid Wood King Size Hydraulic Storage Bed in American Walnut Finish'
+          price={12000}
+          discountPrice={100}
+        />
+        <ProductCard
+          image='/assets/images/home/bedroom.png'
+          title='Terra Bedroom Collection Furniture Masai Solid Wood King Size Hydraulic Storage Bed in American Walnut Finish'
+          price={12000}
+          discountPrice={100}
+        />
+        <ProductCard
+          image='/assets/images/home/bedroom.png'
+          title='Terra Bedroom Collection Furniture Masai Solid Wood King Size Hydraulic Storage Bed in American Walnut Finish'
+          price={12000}
+          discountPrice={100}
+        />
+      </div>
+      <div className='py-8 w-full flex items-center '>
+        <Link href='#' className='flex items-center mx-auto'>
+          <Button className='uppercase rounded-r-sm cursor-pointer bg-[#f7750c] w-fit'>
+            See More
+          </Button>
+        </Link>
+      </div>
     </div>
   );
 }
