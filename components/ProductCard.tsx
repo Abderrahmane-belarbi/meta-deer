@@ -1,7 +1,9 @@
+'use client';
+import { createProduct } from '@/lib/actions/Product';
 import Image from 'next/image';
 
 type ProductCardProps = {
-  image: string;
+  imageUrl: string;
   title: string;
   discountPrice?: number;
   price: number;
@@ -17,14 +19,24 @@ const formatPrice = (price: number) => {
 };
 
 export default function ProductCard({
-  image,
+  imageUrl,
   title,
   discountPrice,
   price,
 }: ProductCardProps) {
   return (
-    <div className='max-w-[322px] flex flex-col p-4 items-center gap-4 transition-shadow hover:shadow-[0_0_15px_rgba(0,0,0,0.4)] shadow-gray-400 duration-200'>
-      <Image src={image} width={297} height={297} alt={title} />
+    <div
+      className='max-w-[322px] flex flex-col p-4 items-center gap-4 transition-shadow hover:shadow-[0_0_12px_rgba(0,0,0,0.4)] shadow-gray-300 duration-200'
+      onClick={() => {
+        createProduct({
+          imageUrl,
+          title,
+          discountPrice,
+          price,
+        });
+      }}
+    >
+      <Image src={imageUrl} width={297} height={297} alt={title} />
       <p className='px-8 text-center text-sm text-gray-800'>{title}</p>
       {discountPrice ? (
         <div className='flex items-center gap-2'>

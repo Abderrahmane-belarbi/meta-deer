@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import AdminPage from '../Buttons/Admin';
 
 export default function Linkbar() {
   return (
@@ -10,10 +11,7 @@ export default function Linkbar() {
             <img src='/assets/svg/help.svg' width={20} height={20} />
             <p className='font-normal'>Help</p>
           </Link>
-          <Link className='flex items-center gap-1' href='#'>
-            <img src='/assets/svg/truck.svg' width={20} height={20} />
-            <p className='font-normal'>Track Order</p>
-          </Link>
+          <AdminPage />
         </div>
         <div className='flex items-center gap-4'>
           <Link href='#' className='font-normal'>

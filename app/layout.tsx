@@ -1,41 +1,5 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import Header from '@/components/Header/Header';
-import localFont from 'next/font/local';
-import { Montserrat } from 'next/font/google';
-
-const mreaves = localFont({
-  src: './fonts/mreaves.ttf',
-  display: 'swap',
-  variable: '--font-mreaves',
-});
-const roboto = localFont({
-  src: './fonts/Roboto.ttf',
-  display: 'swap',
-  variable: '--font-roboto',
-});
-const comfortaa = localFont({
-  src: './fonts/Comfortaa.ttf',
-  display: 'swap',
-  variable: '--font-comfortaa',
-});
-const caveat = localFont({
-  src: './fonts/caveat.ttf',
-  display: 'swap',
-  variable: '--font-caveat',
-});
-const alegreya = localFont({
-  src: './fonts/alegreya.ttf',
-  display: 'swap',
-  variable: '--font-alegreya',
-});
-
-const montserrat = Montserrat({
-  subsets: ['latin'],
-  weight: ['400', '600'], // 400 = regular (Ladder), 600 = semi-bold (Urban)
-  display: 'swap',
-  variable: '--font-montserrat',
-});
 
 export const metadata: Metadata = {
   title: 'META DEER',
@@ -43,17 +7,12 @@ export const metadata: Metadata = {
 };
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang='en'>
-      <body
-        className={` ${montserrat.variable} ${comfortaa.variable} ${roboto.variable} ${mreaves.variable} ${caveat.variable} ${alegreya.variable} antialiased`}
-      >
-        <Header />
-        {children}
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
