@@ -1,5 +1,4 @@
 'use client';
-import Link from 'next/link';
 import {
   Dialog,
   DialogContent,
@@ -14,7 +13,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { Button } from '../ui/button';
 
-export default function AdminPage() {
+export default function AdminDialog() {
   const [open, setOpen] = useState(false);
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');

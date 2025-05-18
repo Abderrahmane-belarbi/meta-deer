@@ -2,14 +2,7 @@
 
 import { Product } from "@/lib/db/models/Product";
 import { connectToDatabase } from "@/lib/db";
-
-type ProductInput = {
-
-  title: string;
-  price: number;
-  discountPrice?: number;
-  imageUrl?: string;
-};
+import { ProductInput } from "../types";
 
 export async function createProduct(data: ProductInput) {
   const connected = await connectToDatabase();

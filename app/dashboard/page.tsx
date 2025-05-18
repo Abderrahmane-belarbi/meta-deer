@@ -6,7 +6,6 @@ import {
   Users,
 } from 'lucide-react';
 import Link from 'next/link';
-import { FaArrowLeft } from 'react-icons/fa';
 
 import {
   Card,
@@ -15,16 +14,23 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-/* import { Overview } from "./components/overview" */
-/* import { RecentSales } from "./components/recent-sales" */
+import { Overview } from '../../components/overview';
+import { RecentSales } from '../../components/recent-sales';
+
 export default function DashboardPage() {
   return (
-    <div className='flex-1 space-y-4 p-8 pt-6'>
-      <div className='flex items-center gap-2'>
-        <Link href={'/'}>
-          <FaArrowLeft size={20} className='cursor-pointer' />
-        </Link>
+    <div className='w-full flex-1 space-y-4 p-8 pt-6'>
+      <div className='flex items-center justify-between space-y-2'>
         <h2 className='text-3xl font-bold tracking-tight'>Dashboard</h2>
+        <div className='flex items-center space-x-2'>
+          <Link
+            href='/dashboard/products/new'
+            className='inline-flex h-9 items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50'
+          >
+            <Package className='mr-2 h-4 w-4' />
+            Add Product
+          </Link>
+        </div>
       </div>
       <div className='grid gap-4 md:grid-cols-2 lg:grid-cols-4'>
         <Card>
@@ -86,7 +92,9 @@ export default function DashboardPage() {
               Sales overview for the current year.
             </CardDescription>
           </CardHeader>
-          <CardContent className='pl-2'>{/* <Overview /> */}</CardContent>
+          <CardContent className='pl-2'>
+            <Overview />
+          </CardContent>
         </Card>
         <Card className='col-span-3'>
           <CardHeader>
@@ -95,7 +103,9 @@ export default function DashboardPage() {
               Recent orders from your customers.
             </CardDescription>
           </CardHeader>
-          <CardContent>{/*  <RecentSales /> */}</CardContent>
+          <CardContent>
+            <RecentSales />
+          </CardContent>
         </Card>
       </div>
     </div>

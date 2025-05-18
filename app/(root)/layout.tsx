@@ -1,4 +1,3 @@
-import type { Metadata } from 'next';
 import '../globals.css';
 import Header from '@/components/Header/Header';
 
@@ -8,9 +7,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div>
+    <div className='w-full'>
       <Header />
-      <main>{children}</main>
+      <main className='w-full'>{children}</main>
     </div>
   );
 }
