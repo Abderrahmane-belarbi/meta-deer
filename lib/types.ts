@@ -3,7 +3,7 @@ export type ProductInput = {
   description: string;
   price: number;
   discountPrice?: number;
-  imageUrl?: string;
+  imageUrls?: string[];
   category: string;
   stock: number;
   featured?: boolean;

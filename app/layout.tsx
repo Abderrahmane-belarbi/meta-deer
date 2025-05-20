@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import { EdgeStoreProvider } from '../lib/edgestore';
 
 export const metadata: Metadata = {
   title: 'META DEER',
@@ -12,7 +13,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang='en'>
-      <body>{children}</body>
+      <body>
+        <EdgeStoreProvider>{children}</EdgeStoreProvider>
+      </body>
     </html>
   );
 }

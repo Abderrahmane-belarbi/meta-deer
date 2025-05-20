@@ -1,18 +1,17 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { ArrowLeft, Loader2 } from 'lucide-react';
+import { ArrowLeft, Loader2, X } from 'lucide-react';
 import Link from 'next/link';
 
 import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -30,6 +29,8 @@ import {
 import { Checkbox } from '@/components/ui/checkbox';
 import { categories } from '@/lib/data';
 import { createProduct } from '@/lib/actions/Product';
+import { useEdgeStore } from '@/lib/edgestore';
+import LoaderSpinner from '@/components/Buttons/Loader';
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -41,10 +42,8 @@ const formSchema = z.object({
   price: z.coerce.number().min(0, 'Price must be a non-negative number.'),
   discountedPrice: z.coerce
     .number()
-    .min(0, 'Price must be a non-negative number.'),
-  category: z.string({
-    required_error: 'Please select a category.',
-  }),
+    .min(0, 'Discounted price must be a non-negative number.'),
+  category: z.string({ required_error: 'Please select a category.' }),
   stock: z.coerce.number().min(0, 'Stock must be a non-negative number.'),
   featured: z.boolean().optional(),
 });
@@ -53,7 +52,11 @@ type FormValues = z.infer<typeof formSchema>;
 
 export default function NewProductPage() {
   const router = useRouter();
+  const { edgestore } = useEdgeStore();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [files, setFiles] = useState<File[]>([]);
+  const [imageUrls, setImageUrls] = useState<string[]>([]);
+  const [imageLoading, setImageLoading] = useState(false);
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -68,17 +71,56 @@ export default function NewProductPage() {
     },
   });
 
-  async function onSubmit(values: FormValues) {
+  const handleFiles = useCallback(
+    async (selectedFiles: FileList | File[]) => {
+      const fileArray = Array.from(selectedFiles);
+
+      const newUrls: string[] = [];
+
+      for (const file of fileArray) {
+        setImageLoading(true);
+        const res = await edgestore.publicFiles.upload({
+          file,
+          onProgressChange: (progress) => {
+            console.log(`Upload progress: ${progress}%`);
+          },
+        });
+        newUrls.push(res.url);
+      }
+
+      // Append to existing URLs
+      setImageUrls((prev) => [...prev, ...newUrls]);
+      setImageLoading(false);
+    },
+    [edgestore]
+  );
+
+  const handleDrop = async (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    if (e.dataTransfer.files.length > 0) {
+      await handleFiles(e.dataTransfer.files);
+    }
+  };
+
+  const onSubmit = async (values: FormValues) => {
     setIsSubmitting(true);
-    await createProduct(values);
-    // Simulate API call
+
+    await createProduct({
+      ...values,
+      imageUrls,
+    });
+
     setTimeout(() => {
-      console.log(values);
       setIsSubmitting(false);
       router.push('/dashboard/products');
-    }, 1500);
-  }
+    }, 1000);
+  };
 
+  function handleRemoveImage(index: number) {
+    const newUrls = [...imageUrls];
+    newUrls.splice(index, 1);
+    setImageUrls(newUrls);
+  }
   return (
     <div className='flex-1 space-y-4 p-8 pt-6'>
       <div className='flex items-center justify-between'>
@@ -93,6 +135,7 @@ export default function NewProductPage() {
       </div>
 
       <div className='grid gap-6 grid-cols-1 md:grid-cols-2'>
+        {/* Form Section */}
         <div className='space-y-4'>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-6'>
@@ -118,7 +161,7 @@ export default function NewProductPage() {
                     <FormItem>
                       <FormLabel>Price ($)</FormLabel>
                       <FormControl>
-                        <Input placeholder='99.99' type='number' {...field} />
+                        <Input type='number' {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -131,7 +174,7 @@ export default function NewProductPage() {
                     <FormItem>
                       <FormLabel>Stock</FormLabel>
                       <FormControl>
-                        <Input placeholder='100' type='number' {...field} />
+                        <Input type='number' {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -139,21 +182,19 @@ export default function NewProductPage() {
                 />
               </div>
 
-              <div className='grid grid-cols-2 gap-4'>
-                <FormField
-                  control={form.control}
-                  name='discountedPrice'
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Discounted Price ($)</FormLabel>
-                      <FormControl>
-                        <Input placeholder='99.99' type='number' {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
+              <FormField
+                control={form.control}
+                name='discountedPrice'
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Discounted Price ($)</FormLabel>
+                    <FormControl>
+                      <Input type='number' {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
               <FormField
                 control={form.control}
@@ -194,8 +235,8 @@ export default function NewProductPage() {
                     <FormLabel>Description</FormLabel>
                     <FormControl>
                       <Textarea
-                        placeholder='Enter product description...'
                         className='min-h-[120px]'
+                        placeholder='Enter product description...'
                         {...field}
                       />
                     </FormControl>
@@ -208,7 +249,7 @@ export default function NewProductPage() {
                 control={form.control}
                 name='featured'
                 render={({ field }) => (
-                  <FormItem className='flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4'>
+                  <FormItem className='flex flex-row items-start space-x-3 border rounded-md p-4'>
                     <FormControl>
                       <Checkbox
                         checked={field.value}
@@ -217,9 +258,9 @@ export default function NewProductPage() {
                     </FormControl>
                     <div className='space-y-1 leading-none'>
                       <FormLabel>Featured Product</FormLabel>
-                      <FormDescription>
+                      <p className='text-sm text-muted-foreground'>
                         This product will appear on the homepage.
-                      </FormDescription>
+                      </p>
                     </div>
                   </FormItem>
                 )}
@@ -239,37 +280,51 @@ export default function NewProductPage() {
           </Form>
         </div>
 
+        {/* Upload Area */}
         <div className='rounded-lg border p-6'>
-          <h3 className='mb-4 text-lg font-medium'>Product Image</h3>
-          <div className='flex flex-col items-center justify-center space-y-4'>
-            <div className='flex h-64 w-full items-center justify-center rounded-md border border-dashed'>
-              <div className='flex flex-col items-center space-y-2 text-center'>
-                <div className='flex h-20 w-20 items-center justify-center rounded-full bg-muted'>
-                  <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    className='h-10 w-10 text-muted-foreground'
-                    fill='none'
-                    viewBox='0 0 24 24'
-                    stroke='currentColor'
-                  >
-                    <path
-                      strokeLinecap='round'
-                      strokeLinejoin='round'
-                      strokeWidth={2}
-                      d='M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z'
-                    />
-                  </svg>
-                </div>
-                <div>
-                  <p className='text-sm text-muted-foreground'>
-                    Drag and drop your image here, or click to select
-                  </p>
-                </div>
+          <h3 className='mb-4 text-lg font-medium'>Product Images</h3>
+          <div
+            onDrop={handleDrop}
+            onDragOver={(e) => e.preventDefault()}
+            className='flex h-64 w-full flex-col items-center justify-center space-y-4 rounded-md border border-dashed'
+          >
+            <p className='text-sm text-muted-foreground'>
+              Select or Drag and drop images here
+            </p>
+            {!imageLoading ? (
+              <label className='cursor-pointer bg-muted px-4 py-2 rounded-md text-sm hover:bg-muted/80'>
+                Upload Files
+                <input
+                  type='file'
+                  multiple
+                  className='hidden'
+                  onChange={(e) => {
+                    if (e.target.files) handleFiles(e.target.files);
+                  }}
+                />
+              </label>
+            ) : (
+              <LoaderSpinner />
+            )}
+          </div>
+
+          {/* Preview Images */}
+          <div className='mt-4 grid grid-cols-4 gap-2'>
+            {imageUrls.map((url, i) => (
+              <div className='relative'>
+                <X
+                  key={i}
+                  onClick={() => handleRemoveImage(i)}
+                  size={22}
+                  className='absolute -top-2 -right-2 cursor-pointer text-black bg-white rounded-full border-2 border-gray-800 p-[3px]'
+                />
+                <img
+                  src={url}
+                  alt={`Product ${i + 1}`}
+                  className='h-24 w-full object-cover rounded-sm border'
+                />
               </div>
-            </div>
-            <Button variant='outline' className='w-full'>
-              Upload Image
-            </Button>
+            ))}
           </div>
         </div>
       </div>
