@@ -54,7 +54,6 @@ export default function NewProductPage() {
   const router = useRouter();
   const { edgestore } = useEdgeStore();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [files, setFiles] = useState<File[]>([]);
   const [imageUrls, setImageUrls] = useState<string[]>([]);
   const [imageLoading, setImageLoading] = useState(false);
 
@@ -311,9 +310,8 @@ export default function NewProductPage() {
           {/* Preview Images */}
           <div className='mt-4 grid grid-cols-4 gap-2'>
             {imageUrls.map((url, i) => (
-              <div className='relative'>
+              <div className='relative' key={i}>
                 <X
-                  key={i}
                   onClick={() => handleRemoveImage(i)}
                   size={22}
                   className='absolute -top-2 -right-2 cursor-pointer text-black bg-white rounded-full border-2 border-gray-800 p-[3px]'
