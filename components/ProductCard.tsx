@@ -1,5 +1,4 @@
 'use client';
-import { createProduct } from '@/lib/actions/Product';
 import Image from 'next/image';
 
 type ProductCardProps = {

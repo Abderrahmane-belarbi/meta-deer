@@ -1,5 +1,4 @@
 'use client';
-// @typescript-eslint/no-explicit-any
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from 'recharts';
 
 const data = [
@@ -69,7 +68,7 @@ export function Overview() {
           fontSize={12}
           tickLine={false}
           axisLine={false}
-          tickFormatter={(value: any) => `$${value}`}
+          tickFormatter={(value: number) => `$${value}`}
         />
         <Bar dataKey='total' fill='#0ea5e9' radius={[4, 4, 0, 0]} />
       </BarChart>
