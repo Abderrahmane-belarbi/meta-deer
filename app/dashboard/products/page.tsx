@@ -12,8 +12,11 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
+import { getProducts } from '@/lib/actions/Product';
+import { ProductInput } from '@/lib/types';
 
-export default function ProductsPage() {
+export default async function ProductsPage() {
+  const products = await getProducts();
   return (
     <div className='w-full space-y-4 p-8 pt-6'>
       <div className='flex items-center justify-between'>
@@ -41,11 +44,11 @@ export default function ProductsPage() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {products.map((product) => (
-              <TableRow key={product.id}>
+            {products.map((product: ProductInput) => (
+              <TableRow key={product._id}>
                 <TableCell>
                   <Image
-                    src={product.image || '/placeholder.svg'}
+                    src={product.imageUrls![0] || '/placeholder.svg'}
                     alt={product.name}
                     width={40}
                     height={40}
@@ -57,16 +60,12 @@ export default function ProductsPage() {
                 <TableCell>${product.price.toFixed(2)}</TableCell>
                 <TableCell>{product.stock}</TableCell>
                 <TableCell>
-                  <Badge
-                    variant={
-                      product.status === 'In Stock' ? 'default' : 'secondary'
-                    }
-                  >
-                    {product.status}
+                  <Badge variant={product.stock > 0 ? 'default' : 'secondary'}>
+                    {product.stock > 0 ? 'In stock' : 'Out of stock'}
                   </Badge>
                 </TableCell>
                 <TableCell className='text-right'>
-                  <Link href={`/dashboard/products/${product.id}`}>
+                  <Link href={`/dashboard/products/${product._id}`}>
                     <Button variant='ghost' size='sm'>
                       Edit
                     </Button>

@@ -1,4 +1,5 @@
 export type ProductInput = {
+  _id?: string;
   name: string;
   description: string;
   price: number;
